@@ -1,0 +1,310 @@
+options:
+  parameters:
+    author: "Francisco Nicol\xE1s P\xE9rez Fern\xE1ndez"
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: "Conclusion:\n Seems that the message \nkeys in the documentation for\
+      \ the\nSoapy Source have no effect in\nchanging the parameters."
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: soapyHackRFsourceCmdTest
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Soapy HackRF Source Commands test
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 24.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: antialiass_filter_bw0
+  id: variable
+  parameters:
+    comment: ''
+    value: 3.5e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 16.0]
+    rotation: 0
+    state: enabled
+- name: center_freq
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: 850e6
+    step: '1'
+    stop: 870e6
+    value: 869.3e6
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 96.0]
+    rotation: 0
+    state: enabled
+- name: center_freq0
+  id: variable
+  parameters:
+    comment: ''
+    value: 869.3e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 16.0]
+    rotation: 0
+    state: enabled
+- name: gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '50'
+    value: '0'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 224.0]
+    rotation: 0
+    state: enabled
+- name: if_gain0
+  id: variable
+  parameters:
+    comment: ''
+    value: '16'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [568, 16.0]
+    rotation: 0
+    state: enabled
+- name: lna_on0
+  id: variable
+  parameters:
+    comment: ''
+    value: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [504, 16.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_msgdigitalnumbercontrol_0
+  id: qtgui_msgdigitalnumbercontrol
+  parameters:
+    ThousandsSeparator: ','
+    affinity: ''
+    alias: ''
+    comment: ''
+    gui_hint: ''
+    lbl: ''
+    maxFreqHz: 1700e6
+    maxoutbuf: '0'
+    minFreqHz: 30e6
+    minoutbuf: '0'
+    outputmsgname: freq
+    readOnly: 'False'
+    relBackgroundColor: black
+    relFontColor: white
+    value: 100e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [808, 80.0]
+    rotation: 0
+    state: enabled
+- name: rate
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '1000000'
+    step: '1'
+    stop: '16000000'
+    value: '13000000'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 352.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate0
+  id: variable
+  parameters:
+    comment: ''
+    value: '13000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 16.0]
+    rotation: 0
+    state: enabled
+- name: vga_gain0
+  id: variable
+  parameters:
+    comment: ''
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [632, 16.0]
+    rotation: 0
+    state: enabled
+- name: blocks_var_to_msg_0
+  id: blocks_var_to_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msgname: freq
+    target: center_freq
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 96.0]
+    rotation: 0
+    state: enabled
+- name: blocks_var_to_msg_0_0
+  id: blocks_var_to_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msgname: gain
+    target: gain
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 224.0]
+    rotation: 0
+    state: enabled
+- name: blocks_var_to_msg_0_0_0
+  id: blocks_var_to_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msgname: rate
+    target: rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 352.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_sink_x_0_0
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate0
+    comment: ''
+    fc: center_freq0
+    fftsize: '8192'
+    gui_hint: (1,0,1,1)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"Osmocom/Soapy HW Output Spectrum"'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '60'
+    showports: 'False'
+    showrf: 'True'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [808, 200.0]
+    rotation: 0
+    state: enabled
+- name: soapy_hackrf_source_0
+  id: soapy_hackrf_source
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: lna_on0
+    bandwidth: antialiass_filter_bw0
+    center_freq: center_freq0
+    comment: HackRF
+    dev_args: ''
+    gain: if_gain0
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate0
+    type: fc32
+    vga: vga_gain0
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 224.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_var_to_msg_0, msgout, qtgui_msgdigitalnumbercontrol_0, valuein]
+- [blocks_var_to_msg_0, msgout, soapy_hackrf_source_0, cmd]
+- [blocks_var_to_msg_0_0, msgout, soapy_hackrf_source_0, cmd]
+- [blocks_var_to_msg_0_0_0, msgout, soapy_hackrf_source_0, cmd]
+- [soapy_hackrf_source_0, '0', qtgui_sink_x_0_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.2.0

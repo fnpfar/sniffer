@@ -1,0 +1,2228 @@
+options:
+  parameters:
+    author: "Francisco Nicol\xE1s P\xE9rez Fern\xE1ndez"
+    catch_exceptions: 'True'
+    category: '[Verisure GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: hb
+    hier_block_src_path: '.:'
+    id: verisure4GFSKRadioChannelToDataMessage
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Verisure 4GFSK Radio Channel to Data Mesagge
+    window_size: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 16.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: compensation_delay_time
+  id: variable
+  parameters:
+    comment: ''
+    value: '2.1e-3'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1208, 608.0]
+    rotation: 0
+    state: enabled
+- name: cutoff_freq
+  id: variable
+  parameters:
+    comment: '@ -6 dB'
+    value: (passband_end+stopband_start)/2
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 240.0]
+    rotation: 0
+    state: true
+- name: decimation
+  id: variable
+  parameters:
+    comment: ''
+    value: int(samp_rate/samp_rate_demod)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 16.0]
+    rotation: 0
+    state: enabled
+- name: filterGain
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [656, 144.0]
+    rotation: 0
+    state: enabled
+- name: fourPamConstellation
+  id: variable_constellation
+  parameters:
+    comment: Verisure 4GFSK Constellation
+    const_points: '[-1/3,-1,1/3,1]'
+    dims: '1'
+    normalization: digital.constellation.NO_NORMALIZATION
+    precision: '8'
+    rot_sym: '2'
+    soft_dec_lut: '''auto'''
+    sym_map: '[1,0,2,3]'
+    type: calcdist
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 1240.0]
+    rotation: 0
+    state: true
+- name: symbolrate
+  id: variable
+  parameters:
+    comment: ''
+    value: bitrate/2
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 904.0]
+    rotation: 0
+    state: true
+- name: transition_width
+  id: variable
+  parameters:
+    comment: 'From passband
+
+      to stopband'
+    value: stopband_start-passband_end
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 240.0]
+    rotation: 0
+    state: true
+- name: analog_pwr_squelch_xx_0
+  id: analog_pwr_squelch_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha: squelchAlpha
+    comment: ''
+    gate: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ramp: squelch_ramp
+    threshold: squelch_level
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 280.0]
+    rotation: 0
+    state: enabled
+- name: analog_quadrature_demod_cf_0
+  id: analog_quadrature_demod_cf
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 4GFSK to 4PAM
+    gain: samp_rate/(decimation*2*math.pi*fsk_deviation)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1048, 336.0]
+    rotation: 0
+    state: enabled
+- name: bitrate
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Bitrate (bps)
+    short_id: ''
+    type: intx
+    value: '100000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [576, 808.0]
+    rotation: 0
+    state: true
+- name: blocks_add_const_vxx_0_0
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '70'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 1784.0]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_1_0
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: To [{-1},{1}] range
+    const: '-1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [880, 1432.0]
+    rotation: 0
+    state: true
+- name: blocks_char_to_float_0_0
+  id: blocks_char_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 1432.0]
+    rotation: 0
+    state: true
+- name: blocks_char_to_float_0_0_0
+  id: blocks_char_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 1328.0]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_mag_squared_0
+  id: blocks_complex_to_mag_squared
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [784, 680.0]
+    rotation: 0
+    state: enabled
+- name: blocks_delay_0
+  id: blocks_delay
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Compensates AGCs delay
+    delay: int(compensation_delay_time*samp_rate_demod)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1272, 680.0]
+    rotation: 0
+    state: enabled
+- name: blocks_delay_0_0
+  id: blocks_delay
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    delay: int(compensation_delay_time*samp_rate_demod)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1248, 536.0]
+    rotation: 0
+    state: enabled
+- name: blocks_float_to_complex_1
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [176, 1424.0]
+    rotation: 0
+    state: enabled
+- name: blocks_moving_average_xx_0
+  id: blocks_moving_average_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    length: '64'
+    max_iter: '1000'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: 1/64
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [936, 648.0]
+    rotation: 0
+    state: enabled
+- name: blocks_moving_average_xx_0_0
+  id: blocks_moving_average_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    length: '64'
+    max_iter: '1000'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: 1/64
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1080, 448.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_xx_0_0
+  id: blocks_multiply_const_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '0.02'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 1784.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_xx_0_0_0
+  id: blocks_multiply_const_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: -2/fsk_deviation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 1840.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_xx_0_0_0_0
+  id: blocks_multiply_const_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: -fsk_deviation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1272, 472.0]
+    rotation: 0
+    state: enabled
+- name: blocks_multiply_const_xx_1_1
+  id: blocks_multiply_const_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 1432.0]
+    rotation: 0
+    state: true
+- name: blocks_nlog10_ff_0
+  id: blocks_nlog10_ff
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: 'k: offset calib.'
+    k: power_offset_calib
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n: '10'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1144, 672.0]
+    rotation: 0
+    state: enabled
+- name: blocks_null_source_1
+  id: blocks_null_source
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_source: '[[0,],]'
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_outputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1496.0]
+    rotation: 0
+    state: true
+- name: blocks_repeat_0
+  id: blocks_repeat
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: For debug
+    interp: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 1328.0]
+    rotation: 0
+    state: true
+- name: blocks_selector_0_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: ch_enable
+    input_index: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '1'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 336.0]
+    rotation: 0
+    state: true
+- name: blocks_tag_gate_0
+  id: blocks_tag_gate
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    propagate_tags: 'False'
+    single_key: '""'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 296.0]
+    rotation: 0
+    state: true
+- name: blocks_uchar_to_float_0
+  id: blocks_uchar_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 1736.0]
+    rotation: 0
+    state: enabled
+- name: blocks_uchar_to_float_0_1_0
+  id: blocks_uchar_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 1352.0]
+    rotation: 0
+    state: enabled
+- name: blocks_unpack_k_bits_bb_0
+  id: blocks_unpack_k_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: "Simbols to bits.\nAplies K factor \ninterpolation"
+    k: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 1432.0]
+    rotation: 0
+    state: enabled
+- name: ch_enable
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Enable
+    short_id: ''
+    type: ''
+    value: 'True'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 448.0]
+    rotation: 0
+    state: true
+- name: ch_number
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Number
+    short_id: ''
+    type: intx
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 1536.0]
+    rotation: 0
+    state: true
+- name: crc_key
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel CRC Key
+    short_id: ''
+    type: intx
+    value: '0xFFFF'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 1536.0]
+    rotation: 0
+    state: true
+- name: crc_polynomial
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel CRC Polynomial
+    short_id: ''
+    type: intx
+    value: '0x8005'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 1536.0]
+    rotation: 0
+    state: true
+- name: dc_blocker_xx_0_0
+  id: dc_blocker_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    length: int(demod_dc_block_time*samp_rate_demod)
+    long_form: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: ff
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 328.0]
+    rotation: 0
+    state: enabled
+- name: debug_log
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Message Debug Log
+    short_id: ''
+    type: ''
+    value: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 1808.0]
+    rotation: 0
+    state: true
+- name: debug_log_verbosity
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Debug on High Verbosity
+    short_id: ''
+    type: ''
+    value: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 1728.0]
+    rotation: 0
+    state: true
+- name: demod_dc_block_time
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Demodulator DC Block Window Time (s)
+    short_id: ''
+    type: eng_float
+    value: 6e-3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 232.0]
+    rotation: 0
+    state: true
+- name: dewhitening_key
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Initial Dewhitening Key
+    short_id: ''
+    type: intx
+    value: '0x1ff'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 1536.0]
+    rotation: 0
+    state: true
+- name: digital_binary_slicer_fb_0_3
+  id: digital_binary_slicer_fb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1184, 1440.0]
+    rotation: 0
+    state: enabled
+- name: digital_constellation_decoder_cb_0
+  id: digital_constellation_decoder_cb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Soft to hard simbols
+    constellation: fourPamConstellation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 1432.0]
+    rotation: 0
+    state: enabled
+- name: digital_correlate_access_code_tag_xx_0
+  id: digital_correlate_access_code_tag_xx
+  parameters:
+    access_code: '"1111011101011111110101110101011111110111010111111101011101010111"'
+    affinity: ''
+    alias: ''
+    comment: 'Using modified access code for
+
+      2-GFSK sync code detection'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tagname: '"phyframe"'
+    threshold: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [992, 1416.0]
+    rotation: 0
+    state: enabled
+- name: digital_symbol_sync_xx_0
+  id: digital_symbol_sync_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: None
+    damping: loop_damping
+    loop_bw: loop_bw
+    max_dev: ted_max_deviation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nfilters: '128'
+    osps: '1'
+    pfb_mf_taps: '[]'
+    resamp_type: digital.IR_MMSE_8TAP
+    sps: samp_rate_demod/symbolrate
+    ted_gain: ted_gain
+    ted_type: digital.TED_EARLY_LATE
+    type: ff
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [528, 968.0]
+    rotation: 0
+    state: true
+- name: epy_block_3
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.sync_block):  # other\
+      \ base classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block example - a simple multiply const\"\"\"\n\n    def __init__(self,\
+      \ initial_PRBS_key=0x1FF, dewhite_CRC=True, debug_Log=False):  # only default\
+      \ arguments here\n        \"\"\"arguments to this function show up as parameters\
+      \ in GRC\"\"\"\n        gr.sync_block.__init__(\n            self,\n       \
+      \     name='Verisure Dewhitener',   # will show up in GRC\n            in_sig=None,\n\
+      \            out_sig=None\n        )\n\n        # if an attribute with the same\
+      \ name as a parameter is found,\n        # a callback is registered (properties\
+      \ work, too).\n        self.key_init = initial_PRBS_key\n        self.enableDewhiteCRC\
+      \ = dewhite_CRC # adds the \"dewhited_crc\" key (and value) to the pdu metadata\
+      \ dictionary\n        self.log = debug_Log\n        if self.log: self.keys =\
+      \ [] # debug\n\n        self.message_port_register_in(pmt.intern('pdu_in'))\
+      \ # input message port definition\n        self.message_port_register_out(pmt.intern('pdu_out'))\
+      \ # output message port definition\n        self.set_msg_handler(pmt.intern('pdu_in'),\
+      \ self.handle_pdu) # asociation of handler function to input\n\n    def handle_pdu(self,\
+      \ pdu): # called when a pdu has been published to 'pdu_in' message port\n  \
+      \      \n        # access to the pdu parts:\n        pduMetadataDictionary =\
+      \ pmt.car(pdu) # first field of pdu extracted\n        pduPayloadVector = pmt.to_python(pmt.cdr(pdu))\
+      \ # second field of pdu extracted, which is the payload vector\n\n\n\n     \
+      \   dewhitedLengthField, lastPrbsKey = self.dewhite_lengtField(self, whitenedLengthField,\
+      \ initialPrbsKey):\n\n        dewhitedPayload, lastPrbsKey = self.dewhite_payload(pduPayloadVector)\
+      \ # list of dewhited bytes of the payload\n\n        if self.enableDewhiteCRC:\n\
+      \            frameCrc = pmt.to_python(pmt.dict_ref(pduMetadataDictionary, pmt.intern(\"\
+      crc\"), pmt.PMT_NIL)) # access to crc key\n            dewhitedCRC = self.dewhite_crc(frameCrc,\
+      \ lastPrbsKey)\n            pduMetadataDictionary = pmt.dict_add(pduMetadataDictionary,\
+      \ pmt.intern(\"dewhited_crc\"),  pmt.from_long(dewhitedCRC))\n\n        if self.log:\
+      \ # Debug\n            binaryKeys = []\n            for key in self.keys:\n\
+      \                binaryKeys.append(format(key, \"09b\"))\n            print\
+      \ ('')\n            print ('   2. Verisure Dewhitener debug message:')\n   \
+      \         print (' .----------------------------------------->')\n         \
+      \   print (' | Payload Length:', len(dewhitedPayload))\n            print ('\
+      \ | Dewhitened Payload Data in DEC:', dewhitedPayload)\n            print ('\
+      \ | Dewhitened CRC in DEC:', dewhitedCRC if self.enableDewhiteCRC else ' DISABLED')\n\
+      \            print (' | PRBS generated keys:', binaryKeys)\n            print\
+      \ (' *----------------------------------------->')  \n            print ('')\n\
+      \            self.keys.clear()\n\n        pdu = pmt.cons(pduMetadataDictionary,\
+      \ pmt.to_pmt(dewhitedPayload)) # builds a GNU Radio standarized PDU      \n\
+      \        self.message_port_pub(pmt.intern('pdu_out'), pdu) # publishes PDU.\
+      \ args: port, message\n        \n\n    def calculateNextPRBSkey(self, currentKey):\
+      \ # calculates the next key of the pseudo random binary sequence with PRBS9\
+      \ polynomial  \n        key = currentKey\n        for i in range (0,8):\n  \
+      \          msb = 0x1 & (key ^ (key >> 5)) # 1 bit, corresponds to the xor operation\
+      \ between bits 0 and 5 of the last key\n            nextKeyLsbByte = 0xFF &\
+      \ (key >> 1) # generates the 8 lsb's of the new key by shifting\n          \
+      \  key = (msb << 8) | nextKeyLsbByte # adds the precalculated msb to the 8 lsbs\n\
+      \        return key\n\n    def dewhite_lengtField(self, whitenedLengthField,\
+      \ initialPrbsKey):\n        dewhitenedLength = 0\n        prbsKey = initialPrbsKey\
+      \ # initial pseudo random binary key\n        dewhitenedLength |= (0xFF & (whitenedLengthField\
+      \ ^ prbsKey)) # (dewhitened byte) == (byte xored with the key)\n        if self.log:\
+      \ self.keys.append(prbsKey) # debug\n        nextPrbsKey = self.calculateNextPRBSkey(prbsKey)\n\
+      \        return dewhitenedLength, nextPrbsKey\n\n    def dewhite_payload(self,\
+      \ payloadVector, initialPrbsKey): # aplies dewithening algorithm to each byte\
+      \ of the payload\n        dewhitenedPayload = []\n        prbsKey = initialPrbsKey\
+      \ # initial pseudo random binary key\n        for byte in payloadVector:\n \
+      \           dewhitenedPayload.append(0xFF & (byte ^ prbsKey)) # appends (dewhitened\
+      \ byte) == (byte xored with the key)\n            if self.log: self.keys.append(prbsKey)\
+      \ # debug\n            prbsKey = self.calculateNextPRBSkey(prbsKey)\n      \
+      \  return dewhitenedPayload, prbsKey # returns dewhitenedPayload list but also\
+      \ last generated prbsKey\n\n    def dewhite_crc(self, whitenedCRC, initialPrbsKey):\
+      \ # called after dewhite_payload, aplies dewithening algorithm to CRC\n    \
+      \    dewhitenedCRC = 0\n        prbsKey = initialPrbsKey\n        for i in range\
+      \ (1,-1,-1): # i = 1,0 (2 bytes of the CRC)\n            dewhitenedCRC |= (0xFF\
+      \ & (whitenedCRC ^ prbsKey)) << 8 * i # (dewhitened byte) == (byte xored with\
+      \ the key)\n            if self.log: self.keys.append(prbsKey) # debug\n   \
+      \         prbsKey = self.calculateNextPRBSkey(prbsKey)\n        return dewhitenedCRC\n\
+      \n\n\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    debug_Log: 'True'
+    dewhite_CRC: 'True'
+    initial_PRBS_key: '0x1E1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Verisure Dewhitener', 'blk', [('initial_PRBS_key', '511'), ('dewhite_CRC',
+      'True'), ('debug_Log', 'False')], [('pdu_in', 'message', 1)], [('pdu_out', 'message',
+      1)], 'Embedded Python Block example - a simple multiply const', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1104, 1760.0]
+    rotation: 0
+    state: disabled
+- name: freq_xlating_fft_filter_ccc_0
+  id: freq_xlating_fft_filter_ccc
+  parameters:
+    affinity: ''
+    alias: ''
+    center_freq: selected_ch_freq - lo_osc_freq
+    comment: ''
+    decim: decimation
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '8'
+    samp_delay: '1'
+    samp_rate: samp_rate
+    taps: ' firdes.low_pass_2(filterGain,samp_rate,cutoff_freq,transition_width,stop_band_attenuation_dB)'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [480, 336.0]
+    rotation: 0
+    state: enabled
+- name: fsk_deviation
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: FSK Frequency Deviation
+    short_id: ''
+    type: eng_float
+    value: 60e3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1040, 240.0]
+    rotation: 0
+    state: true
+- name: lo_osc_freq
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: HW Local Oscillator Frequency (Hz)
+    short_id: ''
+    type: eng_float
+    value: 869.3e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 448.0]
+    rotation: 0
+    state: true
+- name: loop_bw
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Loop BW
+    short_id: ''
+    type: eng_float
+    value: '0.015'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 1128.0]
+    rotation: 0
+    state: true
+- name: loop_damping
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Loop Damping Factor
+    short_id: ''
+    type: eng_float
+    value: '1.4'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 1128.0]
+    rotation: 0
+    state: true
+- name: mmse_resampler_xx_0
+  id: mmse_resampler_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    phase_shift: '0'
+    resamp_ratio: samp_rate/(decimation*bitrate)
+    type: complex
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 648.0]
+    rotation: 0
+    state: enabled
+- name: mmse_resampler_xx_0_0
+  id: mmse_resampler_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    phase_shift: '0'
+    resamp_ratio: samp_rate/(decimation*bitrate)
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 448.0]
+    rotation: 0
+    state: enabled
+- name: note_0
+  id: note
+  parameters:
+    alias: ''
+    comment: ''
+    note: symbols to bitstream ->
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1368.0]
+    rotation: 0
+    state: true
+- name: note_0_0
+  id: note
+  parameters:
+    alias: ''
+    comment: ''
+    note: symbol sync ->
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 952.0]
+    rotation: 0
+    state: true
+- name: note_0_1
+  id: note
+  parameters:
+    alias: ''
+    comment: ''
+    note: bitstream to PDU msg ->
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1576.0]
+    rotation: 0
+    state: true
+- name: pad_sink_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: message_out
+    num_streams: '1'
+    optional: 'False'
+    type: message
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1360, 1656.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: xlating_out
+    num_streams: '1'
+    optional: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 392.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: squelch_out
+    num_streams: '1'
+    optional: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [904, 368.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: demod_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 176.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: dc_block_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1360, 384.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: lf_agc_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [528, 904.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: ssync_out_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 880.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: ssync_err_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 928.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: ssync_tInst_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 976.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: ssync_tavg_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 1024.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: bitstream_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [680, 1728.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: power_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [680, 1784.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0_0_0_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: freq_err_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [680, 1840.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0_0_1
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: correlator_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1352, 1344.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0_0_1_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: ssync_bytes_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 1328.0]
+    rotation: 0
+    state: true
+- name: pad_sink_1_0_0_0_0_0_0_0_0_0_0_1_0_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: ssync_bits_out
+    num_streams: '1'
+    optional: 'True'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [736, 1376.0]
+    rotation: 0
+    state: true
+- name: pad_source_0
+  id: pad_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: in
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_streams: '1'
+    optional: 'False'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 368.0]
+    rotation: 0
+    state: true
+- name: passband_end
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Filter Pass Band End Frequency (Hz)
+    short_id: ''
+    type: eng_float
+    value: 85e3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 144.0]
+    rotation: 0
+    state: true
+- name: power_offset_calib
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: RSSI Calibration Offset (dB)
+    short_id: ''
+    type: eng_float
+    value: '-15'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1056, 568.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Sample Rate (Hz)
+    short_id: ''
+    type: eng_float
+    value: 13e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 16.0]
+    rotation: 0
+    state: true
+- name: samp_rate_demod
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Demodulator Sample Rate (Hz)
+    short_id: ''
+    type: eng_float
+    value: 260e3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [424, 16.0]
+    rotation: 0
+    state: true
+- name: selected_ch_freq
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Center Frequency (Hz)
+    short_id: ''
+    type: eng_float
+    value: 868.15e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 544.0]
+    rotation: 0
+    state: true
+- name: squelchAlpha
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Squelch Alpha
+    short_id: ''
+    type: eng_float
+    value: 300e-3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 104.0]
+    rotation: 0
+    state: true
+- name: squelch_level
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Squelch Threshold Level (dB)
+    short_id: ''
+    type: intx
+    value: '-40'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 8.0]
+    rotation: 0
+    state: true
+- name: squelch_ramp
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Squelch Ramp
+    short_id: ''
+    type: intx
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 192.0]
+    rotation: 0
+    state: true
+- name: stop_band_attenuation_dB
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Filter Stop Band Attenuation (Hz)
+    short_id: ''
+    type: intx
+    value: '96'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [536, 240.0]
+    rotation: 0
+    state: true
+- name: stopband_start
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Filter Stop Band Start Frequency (Hz)
+    short_id: ''
+    type: eng_float
+    value: 95e3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [504, 144.0]
+    rotation: 0
+    state: true
+- name: ted_gain
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: TED Gain
+    short_id: ''
+    type: eng_float
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [528, 1128.0]
+    rotation: 0
+    state: true
+- name: ted_max_deviation
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: TED Maximum deviation
+    short_id: ''
+    type: eng_float
+    value: '1.5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [848, 1128.0]
+    rotation: 0
+    state: true
+- name: verisure_crc_checker
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.sync_block):  # other\
+      \ base classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block example - a simple multiply const\"\"\"\n\n    # only default\
+      \ arguments here\n    def __init__(self, crc_Polynomial=0x8005, crc_Init_Key=0xFFFF,\
+      \ debug_Log=False, high_Verbosity_Log=False):\n        \"\"\"arguments to this\
+      \ function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
+      \            self,\n            name='Verisure CRC Checker',   # will show up\
+      \ in GRC\n            in_sig=None,  # there is no input stream\n           \
+      \ out_sig=None  # there is no output stream\n        )\n\n        # input message\
+      \ port definition\n        self.message_port_register_in(pmt.intern('pdu_in'))\n\
+      \        # output message port definition\n        self.message_port_register_out(pmt.intern('pdu_out'))\n\
+      \        # asociation of handler function to input\n        self.set_msg_handler(pmt.intern('pdu_in'),\
+      \ self.handle_pdu)\n\n        # if an attribute with the same name as a parameter\
+      \ is found,\n        # a callback is registered (properties work, too).\n  \
+      \      self.crcInit = crc_Init_Key\n        self.crcPoly = crc_Polynomial\n\
+      \        self.log = debug_Log\n        self.highVerbosity = high_Verbosity_Log\n\
+      \n        if self.log:  # Debug\n            self.msgNumber = -1  # message\
+      \ indexer for debug\n            self.crcPassCount = 0  # message counter for\
+      \ debug\n            self.crcFailCount = 0  # message counter for debug\n\n\
+      \    def handle_pdu(self, pdu):  # called when a pdu has been published to 'pdu_in'\
+      \ message port\n\n        # access to the pdu parts:\n        pduMetadataDictionary\
+      \ = pmt.car(pdu)  # first field of pdu extracted\n        # second field of\
+      \ pdu extracted, which is the payload vector\n        pduPayloadVector = pmt.to_python(pmt.cdr(pdu))\n\
+      \n        frameCrc = pmt.to_python(pmt.dict_ref(\n            pduMetadataDictionary,\
+      \ pmt.intern(\"crc\"), pmt.PMT_NIL))  # access to crc key\n        frameCrc16bit\
+      \ = self.bytes_to_16bit(frameCrc)\n\n        # crc is calculated over the byte\
+      \ of the length + bytes of the payload\n        lengthAndPayload = pduPayloadVector.copy()\n\
+      \        # length byte is inserted at position 0\n        lengthAndPayload.insert(0,\
+      \ len(pduPayloadVector))\n        # lengthAndPayload.append(len(pduPayloadVector))\n\
+      \n        calculatedCrc = self.calculate_crc(lengthAndPayload)  # calculates\
+      \ crc\n        # checks calculated and frame crc\n        packetOk = 1 if frameCrc16bit\
+      \ == calculatedCrc else 0\n\n        if self.log:  # Debug log\n           \
+      \ channel = int(pmt.to_python(pmt.dict_ref(pduMetadataDictionary, pmt.intern(\n\
+      \                \"channel_number\"), pmt.PMT_NIL)))  # access to channel number\n\
+      \            self.debug_log(channel, packetOk, pduPayloadVector,\n         \
+      \                  lengthAndPayload, frameCrc, frameCrc16bit, calculatedCrc)\n\
+      \n        pduMetadataDictionary = pmt.dict_add(pduMetadataDictionary, pmt.intern(\n\
+      \            \"calculated_crc\"),  pmt.from_long(calculatedCrc))\n        pduMetadataDictionary\
+      \ = pmt.dict_add(\n            pduMetadataDictionary, pmt.intern(\"crc_check\"\
+      ),  pmt.from_long(packetOk))\n\n        # builds a GNU Radio standarized PDU\n\
+      \        pdu = pmt.cons(pduMetadataDictionary, pmt.to_pmt(pduPayloadVector))\n\
+      \        # publishes PDU. args: port, message\n        self.message_port_pub(pmt.intern('pdu_out'),\
+      \ pdu)\n\n    # Update CRC register with new byte (ported code from c)\n\n \
+      \   def update_crc(self, data, crc_reg):\n        bitMask8 = 0xFF  # a bit mask\
+      \ to make Python variables behave like u8_t when shifting\n        bitMask16\
+      \ = 0xFFFF  # a bit mask to make Python variables behave like u16_t when shifting\n\
+      \        data &= bitMask8\n        for i in range(0, 8):\n            if (bitMask16\
+      \ & ((crc_reg & 0x8000) >> 8)) ^ (data & 0x80):\n                crc_reg = (bitMask16\
+      \ & (crc_reg << 1)) ^ self.crcPoly\n            else:\n                crc_reg\
+      \ = bitMask16 & (crc_reg << 1)\n            data = bitMask8 & (data << 1)\n\
+      \        return crc_reg\n\n    # Calculate CRC value on byte array using above\
+      \ function (ported code from c)\n    def calculate_crc(self, data):\n      \
+      \  crc = self.crcInit\n        for byte in data:\n            crc = self.update_crc(byte,\
+      \ crc)\n        return crc\n\n    # Converts a list of two bytes into a big-endian\
+      \ 16 bit value\n    def bytes_to_16bit(self, list):\n        try:\n        \
+      \    return ((list[0] & 0xFF) << 8) | (0xFF & list[1])\n        except:  # if\
+      \ by any reason one of the positions of the list is not defined\n          \
+      \  return 0\n\n    # Converts a list of two bytes into a big-endian 16 bit value\
+      \ (for DEBUG)\n\n    def from16bit_to_bytes(self, value):\n        out = [None]*2\
+      \  # initializing a 2 element list\n        value = 0xFFFF & value\n       \
+      \ out[0] = (0xFF00 & value) >> 8\n        out[1] = (0x00FF & value)\n      \
+      \  return out\n\n    # Log\n    def debug_log(self, channel, packetOk, pduPayloadVector,\
+      \ lengthAndPayload, frameCrc, frameCrc16bit, calculatedCrc):\n\n        self.msgNumber\
+      \ += 1\n        if packetOk:\n            self.crcPassCount += 1\n        else:\n\
+      \            self.crcFailCount += 1\n        passPercentage = (self.crcPassCount/(self.msgNumber\
+      \ + 1))*100\n        failPercentage = (self.crcFailCount/(self.msgNumber + 1))*100\n\
+      \n        if self.highVerbosity:  # high verbosity mode\n            calculatedCRCinBytes\
+      \ = self.from16bit_to_bytes(calculatedCrc)\n            print('')\n        \
+      \    print('  Verisure CRC Checker debug message:')\n            print(' .----------------------------------------->')\n\
+      \            print(' | Channel:', channel)\n            print(' | ----------------------------------------')\n\
+      \            print(' | Payload Length:', len(pduPayloadVector))\n          \
+      \  print(' | Length + Dewhitened Payload Data in DEC:', lengthAndPayload)\n\
+      \            print(' | Length + Dewhitened Payload Data in HEX:',\n        \
+      \          [format(byte, \"02X\") for byte in lengthAndPayload])\n         \
+      \   print(' | ----------------------------------------')\n            print('\
+      \ | Frame CRC in DEC (2-byte representation):', frameCrc)\n            print('\
+      \ | Calculated CRC in DEC (2-byte representation):',\n                  calculatedCRCinBytes)\n\
+      \            print(' | ----------------------------------------')\n        \
+      \    print(' | Frame CRC in BIN      (2-byte representation):',\n          \
+      \        [format(byte, \"08b\") for byte in frameCrc])\n            print('\
+      \ | Calculated CRC in BIN (2-byte representation):',\n                  [format(byte,\
+      \ \"08b\") for byte in calculatedCRCinBytes])\n            print(' | ----------------------------------------')\n\
+      \            print(' | Frame CRC in DEC (16 bit representation):', frameCrc16bit)\n\
+      \            print(' | Calculated CRC in DEC (16 bit representation):', calculatedCrc)\n\
+      \            print(' | ----------------------------------------')\n        \
+      \    print(' | Msg. number (first is number 0):', self.msgNumber)\n        \
+      \    print(' | CRC Check:', 'PASSED' if packetOk else 'FAILED')\n          \
+      \  print(' | ----------------------------------------')\n            print('\
+      \ | Pass rate:', passPercentage, '%')\n            print(' | Failure rate:',\
+      \ failPercentage, '%')\n            print(' *----------------------------------------->')\n\
+      \            print('')\n        else:  # low verbosity mode\n            \"\"\
+      \"\n            print ('')\n            print ('   2. Verisure CRC Checker debug\
+      \ message:')\n            print (' .----------------------------------------->')\n\
+      \            print (' | Msg. number (from #0):', self.msgNumber )     \n   \
+      \         print (' | CRC Check:', 'PASSED' if packetOk else 'FAILED!')\n   \
+      \         print (' | Pass rate:', passPercentage, '%' )  \n            print\
+      \ (' | Failure rate:', failPercentage, '%' )  \n            print (' | (Packets\
+      \ with failed CRC / All packets received):', self.crcFailCount, '/', self.msgNumber\
+      \ + 1 )\n            print (' *----------------------------------------->')\
+      \  \n            print ('')\n            \"\"\"\n            print('Channel:',\
+      \ channel, 'Msg. number (first is number 0):', self.msgNumber, 'CRC Check:',\
+      \ 'PASSED' if packetOk else 'FAILED!',\n                  '(Packets with failed\
+      \ CRC / All packets received):', self.crcFailCount, '/', self.msgNumber + 1)\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    crc_Init_Key: crc_key
+    crc_Polynomial: crc_polynomial
+    debug_Log: debug_log
+    high_Verbosity_Log: debug_log_verbosity
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Verisure CRC Checker', 'blk', [('crc_Polynomial', '32773'), ('crc_Init_Key',
+      '65535'), ('debug_Log', 'False'), ('high_Verbosity_Log', 'False')], [('pdu_in',
+      'message', 1)], [('pdu_out', 'message', 1)], 'Embedded Python Block example
+      - a simple multiply const', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 1632.0]
+    rotation: 0
+    state: enabled
+- name: verisure_float_to_msg_resamp_ratio_converter
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\nclass blk(gr.sync_block):  # other base\
+      \ classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python\
+      \ Block example - a simple multiply const\"\"\"\n\n    def __init__(self, decimation=1):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n         \
+      \   self,\n            name=' Verisure Float to Msg Resamp Ratio Converter',\
+      \   # will show up in GRC\n            in_sig=[np.float32],\n            out_sig=None\n\
+      \        )\n\n        self.message_port_register_out(pmt.intern('msg_out'))\
+      \ # output message port definition\n\n        # if an attribute with the same\
+      \ name as a parameter is found,\n        # a callback is registered (properties\
+      \ work, too).\n        self.decimation = decimation\n\n    def work(self, input_items,\
+      \ output_items):\n        \n        paramDictionary = pmt.make_dict()\n    \
+      \    paramDictionary = pmt.dict_add(paramDictionary, pmt.intern(\"resamp_ratio\"\
+      ),  pmt.from_double(float(input_items[0][0])/self.decimation)) \n        self.message_port_pub(pmt.intern('msg_out'),\
+      \ paramDictionary) # publishes PDU to subscriber blocks. args: port, message\n\
+      \n        return len(input_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    decimation: '2'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: (' Verisure Float to Msg Resamp Ratio Converter', 'blk', [('decimation',
+      '1')], [('0', 'float', 1)], [('msg_out', 'message', 1)], 'Embedded Python Block
+      example - a simple multiply const', ['decimation'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 1072.0]
+    rotation: 0
+    state: enabled
+- name: verisure_tag_counter
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
+      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
+      \ example - a simple multiply const\"\"\"\n\n    def __init__(self, enable_Log=False):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n         \
+      \   self,\n            name='Verisure Tag Counter',   # will show up in GRC\n\
+      \            in_sig=[np.float32],\n            out_sig=None              # there\
+      \ is no output stream\n        )\n        \n        # if an attribute with the\
+      \ same name as a parameter is found,\n        # a callback is registered (properties\
+      \ work, too).\n        self.enableLog = enable_Log\n        \n        self.tagCounter\
+      \ = 0\n\n    def work(self, input_items, output_items):\n        \n        \n\
+      \        tags = self.get_tags_in_window(0, 0, len(input_items[0])) # gets all\
+      \ tags in current buffer. Params: input, rel. start, rel. end\n        for tag\
+      \ in tags:\n            self.tagCounter += 1\n         \n        if self.enableLog\
+      \ and (len(tags) > 0):\n            print ('')\n            print ('   0. Verisure\
+      \ Tag Counter:')\n            print (' .----------------------------------------->')\n\
+      \            print (' | Tag Count:', self.tagCounter)\n            print ('\
+      \ *----------------------------------------->')\n            print ('')\n  \
+      \      return len(input_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    enable_Log: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Verisure Tag Counter', 'blk', [('enable_Log', 'False')], [('0', 'float',
+      1)], [], 'Embedded Python Block example - a simple multiply const', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1208, 1488.0]
+    rotation: 0
+    state: disabled
+- name: verisure_tagged_bitstream_to_pdu
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\nimport numpy as np\nfrom\
+      \ gnuradio import gr\nimport pmt\nfrom datetime import datetime # for timestamping\n\
+      # import queue\n\nclass blk(gr.sync_block):  # other base classes are basic_block,\
+      \ decim_block, interp_block\n    \"\"\"Embedded Python Block example - a simple\
+      \ multiply const\"\"\"\n\n    class Frame(): # auxiliar inner class for storing\
+      \ all the data requiered to parse a frame\n        def __init__(self, tagAbsolutePosition,\
+      \ timestamp, power, freqError, initial_PRBS_key): # Constructor\n          \
+      \  \n            self.tagAbsolutePosition = tagAbsolutePosition # absolute offset\
+      \ in the stream of the tag of the frame\n            self.timestamp = timestamp\
+      \ # timestamp of tag of the frame\n            self.power = power # measure\
+      \ of the power of the signal at the time of the tag\n            self.freqError\
+      \ = freqError # measure of the power of the signal at the time of the tag\n\
+      \            \n            self.nextBitIndexToParse = 0 # index of the next\
+      \ bite of the frame to process\n            self.byteBitMask = 0x80 # bit mask\
+      \ for parsing bits in the bytes of the frame\n            self.currentByteBeingParsed\
+      \ = 0 # stores current byte of the payload being parsed\n            \n    \
+      \        self.payloadLength = 0 # length of the payload expressed in bytes (not\
+      \ including CRC)\n            self.payload = [] # list of bytes of the payload,\
+      \ big endian\n            self.crc = [] # list of bytes of the crc, big endian\n\
+      \            \n            self.currentDewhiteningKey = initial_PRBS_key # initial\
+      \ key for dewhitening\n            \n            \n    # Constructor\n    def\
+      \ __init__(self, channelNumerator=1, initial_Dewhitening_key=0x1FF, debug_Log_frame=False,\
+      \ debug_Log_control_traces=False):  # default arguments here\n        \"\"\"\
+      arguments to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\
+      \ # father constructor call\n            self,\n            name='Verisure Tagged\
+      \ Bistream to PDU',   # will show up in GRC\n            in_sig=[np.int8,np.float32,np.float32],\n\
+      \            out_sig=None # there is no output stream\n        )\n\n       \
+      \ self.message_port_register_out(pmt.intern('pdu_out')) # output message port\
+      \ definition\n\n        # block constants definition\n        self.BITS_IN_A_BYTE\
+      \ = 8\n        self.CRC_LENGTH = 16 # in bits\n\n        # if an attribute with\
+      \ the same name as a parameter is found,\n        # a callback is registered\
+      \ (properties work, too).\n        self.channelNumber = channelNumerator # number\
+      \ of channel for displaying on RfAnalyzer\n        self.dewhitening_key_init\
+      \ = initial_Dewhitening_key\n        self.logBlock = debug_Log_frame # debug\
+      \ log switch for frame info\n        self.logCtrl = debug_Log_control_traces\
+      \ # debug log switch for internal block control depuration traces\n\n      \
+      \  # block atributes initialization (retain data between calls of the work function)\
+      \ \n        self.currentFrameInProcess = None # stores the Frame being parsed\
+      \ between two calls of the work function\n        \n        # self.msb_0 = 0x80\
+      \ # Used in Carlos dewhitening algorithm\n        # self.msb_1 = 0x80\n\n  \
+      \  def work(self, input_items, output_items): # called for every buffer of samples\
+      \ received\n        \n        # finish processing the currentFrameInProcess\
+      \ from the previous call to the work function\n        if self.currentFrameInProcess\
+      \ != None:\n            processedFrame, returnValue = self.continueFrameProcessing(input_items,\
+      \ self.currentFrameInProcess)\n            if returnValue == 1:      # if the\
+      \ parsing of the currentFrameInProcess from the previous window is finished\
+      \ then clean currentFrameInProcess\n                self.currentFrameInProcess\
+      \ = None  \n            elif returnValue == 0:    # else, currentFrameInProcess\
+      \ will be updated to be processed on next window\n                self.currentFrameInProcess\
+      \ = processedFrame\n\n        tags = self.get_tags_in_window(0, 0, len(input_items[0]))\
+      \ # gets all tags in current buffer. Params: input, rel. start, rel. end\n \
+      \       \n        for tag in tags: # itereate over all tags of the window in\
+      \ chronological order. \n                         # on case of error of a length\
+      \ field, a new tag always has priority over the last\n                     \
+      \    # that is why self.currentFrameInProcess can be overwrited multiple times\n\
+      \n            if self.logCtrl: print ('New tag has been detected')\n\n     \
+      \       tagAbsPosition = tag.offset # absolute position of the tag in the stream\n\
+      \n            if self.logBlock: # Debug\n                key = pmt.to_python(tag.key)\
+      \ # convert from PMT to python string\n                value = pmt.to_python(tag.value)\
+      \ # Note that the type(value) can be several things, it depends what PMT type\
+      \ it was\n                index = tagAbsPosition - self.nitems_read(0) # index\
+      \ == relative position of the tag in the current buffer\n                print\
+      \ ('')\n                print ('   1. Verisure Tagged Bistream to PDU debug\
+      \ message:')\n                print (' .----------------------------------------->')\n\
+      \                print (' | Channel Number:', self.channelNumber)\n        \
+      \        print (' | Input tag key:', key)\n                print (' | Input\
+      \ tag value:', value)\n                print (' | Input tag value type:', type(value))\n\
+      \                print (' | Input tag abs. position (offset):', tagAbsPosition)\n\
+      \                print (' | Input tag rel. position (offset):', index)\n\n \
+      \           processedFrame, returnValue = self.startFrameProcessing(tagAbsPosition,\
+      \ input_items) \n            if returnValue == 1:      # if the parsing of the\
+      \ frame is finished then clean currentFrameInProcess\n                self.currentFrameInProcess\
+      \ = None  \n            elif returnValue == 0:    # else, last frame will be\
+      \ overwrited\n                self.currentFrameInProcess = processedFrame\n\
+      \            \n        return len(input_items[0])\n    \n    \n    def startFrameProcessing(self,\
+      \ tagAbsoluteOffset, input_items): # initiates the process of a frame (called\
+      \ when a tag is found in the stream)\n\n        if self.logCtrl: print ('Start\
+      \ Frame Processing')\n\n        # initializing values for a new frame\n    \
+      \    timestamp = datetime.timestamp(datetime.now()) # getting the timestamp\
+      \ from datetime\n        power = input_items[1][tagAbsoluteOffset - self.nitems_read(0)]\
+      \ # reads power input @ tag time\n        freqError = input_items[2][tagAbsoluteOffset\
+      \ - self.nitems_read(0)] # reads freq. error input @ tag time\n        \n  \
+      \      currentFrame = self.Frame(tagAbsoluteOffset, timestamp, power, freqError,\
+      \ self.dewhitening_key_init) # creates a frame object\n        return self.continueFrameProcessing(input_items,\
+      \ currentFrame)\n        \n    \n    def continueFrameProcessing(self, input_items,\
+      \ currentFrame): # parses a frame until the actual buffer is empty or the last\
+      \ bite of the crc is parsed\n\n        if self.logCtrl: print ('Continue Frame\
+      \ Processing')\n        \n        # position of tag in current window (may be\
+      \ < 0 if the tag was captured in a previous call to the work function)\n   \
+      \     frameTagRelativePosition = currentFrame.tagAbsolutePosition - self.nitems_read(0)\
+      \ \n        \n        while frameTagRelativePosition + currentFrame.nextBitIndexToParse\
+      \ < len(input_items[0]): # iterate over current window samples\n           \
+      \ \n            # 1. [HEADER LENGTH] field parsing\n            if currentFrame.nextBitIndexToParse\
+      \ < self.BITS_IN_A_BYTE: \n\n                if input_items[0][frameTagRelativePosition\
+      \ + currentFrame.nextBitIndexToParse] != 0: \n                    currentFrame.payloadLength\
+      \ |= currentFrame.byteBitMask # raises a bit in the length byte\n          \
+      \      currentFrame.byteBitMask >>= 1  # updates bitmask\n\n               \
+      \ if currentFrame.nextBitIndexToParse == self.BITS_IN_A_BYTE - 1: # last bite\
+      \ of the whitened length field is saved\n                    currentFrame.payloadLength\
+      \ = (0xFF & (currentFrame.payloadLength ^ currentFrame.currentDewhiteningKey))\
+      \ # dewhitening\n                    currentFrame.byteBitMask = 0x80 # resets\
+      \ the bit mask for reusing it in payload parsing\n\n            # 2. [PAYLOAD]\
+      \ parsing   \n            elif currentFrame.nextBitIndexToParse < self.BITS_IN_A_BYTE\
+      \ + self.BITS_IN_A_BYTE * currentFrame.payloadLength: \n\n                if\
+      \ input_items[0][frameTagRelativePosition + currentFrame.nextBitIndexToParse]\
+      \ != 0:\n                    currentFrame.currentByteBeingParsed |= currentFrame.byteBitMask\
+      \ # raises a bit in the current byte\n                currentFrame.byteBitMask\
+      \ >>= 1 # updates bitmask\n\n                if (currentFrame.nextBitIndexToParse\
+      \ - self.BITS_IN_A_BYTE) % self.BITS_IN_A_BYTE == self.BITS_IN_A_BYTE - 1: \
+      \ # last bit of the byte\n                    currentFrame.currentDewhiteningKey\
+      \ = self.calculateNextPRBSkey(currentFrame.currentDewhiteningKey) # updates\
+      \ dewhitening key\n                    dewhitenedByte = 0xFF & (currentFrame.currentByteBeingParsed\
+      \ ^ currentFrame.currentDewhiteningKey) # aplies dewhitening with the key\n\
+      \                    currentFrame.payload.append(dewhitenedByte) # stores current\
+      \ byte\n                    currentFrame.byteBitMask = 0x80 # resets the bit\
+      \ mask\n                    currentFrame.currentByteBeingParsed = 0 # resets\
+      \ the current byte (starts over from 0)\n\n            # 3. [CRC] parsing\n\
+      \            elif currentFrame.nextBitIndexToParse < self.BITS_IN_A_BYTE + self.BITS_IN_A_BYTE\
+      \ * currentFrame.payloadLength + self.CRC_LENGTH: \n               \n      \
+      \          if input_items[0][frameTagRelativePosition + currentFrame.nextBitIndexToParse]\
+      \ != 0:\n                    currentFrame.currentByteBeingParsed |= currentFrame.byteBitMask\
+      \ # raises a bit in the current byte\n                currentFrame.byteBitMask\
+      \ >>= 1 # updates bitmask\n\n                if (currentFrame.nextBitIndexToParse\
+      \ - self.BITS_IN_A_BYTE) % self.BITS_IN_A_BYTE == self.BITS_IN_A_BYTE - 1: \
+      \ # last bit of the byte\n                    currentFrame.currentDewhiteningKey\
+      \ = self.calculateNextPRBSkey(currentFrame.currentDewhiteningKey) # updates\
+      \ dewhitening key\n                    dewhitenedByte = 0xFF & (currentFrame.currentByteBeingParsed\
+      \ ^ currentFrame.currentDewhiteningKey) # aplies dewhitening with the key\n\
+      \                    currentFrame.crc.append(dewhitenedByte) # stores current\
+      \ byte\n                    currentFrame.byteBitMask = 0x80 # resets the bit\
+      \ mask\n                    currentFrame.currentByteBeingParsed = 0 # resets\
+      \ the current byte (starts over from 0)     \n               \n            #\
+      \ 4. END\n            else: # end of frame (the last bit of the crc has been\
+      \ parsed)\n                self.endFrameProcessing(currentFrame)\n         \
+      \       return currentFrame, 1 # == the current frame has been parsed successfully\
+      \ (end of the frame)\n                \n            currentFrame.nextBitIndexToParse\
+      \ += 1 # process next bit\n            \n        return currentFrame, 0 # ==\
+      \ the current frame will have to continue being parsed on next call to work\
+      \ function\n\n\n    def endFrameProcessing(self, currentFrame): # finish processing\
+      \ of frame and packs & sends the PDU through message port\n\n        if self.logCtrl:\
+      \ print ('End Frame Processing')\n\n        if self.logBlock: # Debug\n    \
+      \        binaryPayload = []\n            for byte in currentFrame.payload:\n\
+      \                binaryPayload.append(format(byte, \"08b\"))\n            print\
+      \ (' | Payload length:', currentFrame.payloadLength)\n            print (' |\
+      \ Captured payload in DEC:', currentFrame.payload)\n            print (' | Captured\
+      \ payload in BIN:', binaryPayload)\n            print (' | Captured CRC in DEC:',\
+      \ currentFrame.crc)\n            print (' | Timestamp:', currentFrame.timestamp)\n\
+      \            print (' | Date and Time:', datetime.fromtimestamp(currentFrame.timestamp))\n\
+      \            print (' | Power:', currentFrame.power)\n            print (' |\
+      \ Freq. error:', currentFrame.freqError)\n            print (' *----------------------------------------->')\n\
+      \            print ('')\n            \n            \n        metadataDictionary\
+      \ = pmt.make_dict()\n        metadataDictionary = pmt.dict_add(metadataDictionary,\
+      \ pmt.intern(\"channel_number\"), pmt.from_double(self.channelNumber))\n   \
+      \     metadataDictionary = pmt.dict_add(metadataDictionary, pmt.intern(\"payload_length\"\
+      ), pmt.from_long(currentFrame.payloadLength)) # args: dictionary, key, value\n\
+      \        metadataDictionary = pmt.dict_add(metadataDictionary, pmt.intern(\"\
+      crc\"),  pmt.to_pmt(currentFrame.crc)) \n        metadataDictionary = pmt.dict_add(metadataDictionary,\
+      \ pmt.intern(\"timestamp\"),  pmt.from_double(currentFrame.timestamp)) \n  \
+      \      metadataDictionary = pmt.dict_add(metadataDictionary, pmt.intern(\"power\"\
+      ),  pmt.from_double(float(currentFrame.power))) \n        metadataDictionary\
+      \ = pmt.dict_add(metadataDictionary, pmt.intern(\"freq_error\"),  pmt.from_double(float(currentFrame.freqError)))\
+      \ \n        pdu = pmt.cons(metadataDictionary, pmt.to_pmt(currentFrame.payload))\
+      \ # builds a GNU Radio standarized PDU\n        self.message_port_pub(pmt.intern('pdu_out'),\
+      \ pdu) # publishes PDU to subscriber blocks. args: port, message\n        \n\
+      \  \n    # DEWHITENING-----------\n       \n    def calculateNextPRBSkey(self,\
+      \ currentKey): # calculates the next key of the pseudo random binary sequence\
+      \ with PRBS9 polynomial (DEWHITENING)\n        key = currentKey\n        for\
+      \ i in range (0,8):\n            msb = 0x1 & (key ^ (key >> 5)) # 1 bit, corresponds\
+      \ to the xor operation between bits 0 and 5 of the last key\n            nextKeyLsbByte\
+      \ = 0xFF & (key >> 1) # generates the 8 lsb's of the new key by shifting\n \
+      \           key = (msb << 8) | nextKeyLsbByte # adds the precalculated msb to\
+      \ the 8 lsbs\n        return key\n    \n    \"\"\"\n    # Carlos Algorithm (produces\
+      \ same result)\n    def calculateNextPRBSkey(self, currentKey): # calculates\
+      \ the next key of the pseudo random binary sequence with PRBS9 polynomial (DEWHITENING)\n\
+      \        key = currentKey\n        for i in range (0,8):\n            self.msb_1\
+      \ = 0xFF & (((key & 0x01) ^ ((key & 0x20)>>5))<<7)\n            key = (key>>1)\
+      \ | (0xFF & self.msb_0)\n            self.msb_0 = (0xFF & self.msb_1)\n    \
+      \    return key\n    \"\"\"    \n"
+    affinity: ''
+    alias: ''
+    channelNumerator: ch_number
+    comment: ''
+    debug_Log_control_traces: 'False'
+    debug_Log_frame: 'False'
+    initial_Dewhitening_key: dewhitening_key
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Verisure Tagged Bistream to PDU', 'blk', [('channelNumerator', '1'),
+      ('initial_Dewhitening_key', '511'), ('debug_Log_frame', 'False'), ('debug_Log_control_traces',
+      'False')], [('0', 'byte', 1), ('1', 'float', 1), ('2', 'float', 1)], [('pdu_out',
+      'message', 1)], 'Embedded Python Block example - a simple multiply const', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 1632.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: fourPAM
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1352, 336.0]
+    rotation: 0
+    state: enabled
+- name: virtual_sink_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: for RSSI sampling
+    stream_id: power
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1376, 688.0]
+    rotation: 0
+    state: enabled
+- name: virtual_sink_0_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: resamp_ratio
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1192, 1072.0]
+    rotation: 0
+    state: enabled
+- name: virtual_sink_0_0_1
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: '4-PAM Range: [-1,1]'
+    stream_id: soft_symbols
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 800.0]
+    rotation: 0
+    state: enabled
+- name: virtual_sink_0_1_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: tagged_bitstream
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1312, 1432.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0_2
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: freq_error
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1352, 544.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: fourPAM
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 904.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: power
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1696.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: freq_error
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1760.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_1
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: resamp_ratio
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 704.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_1_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: resamp_ratio
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 504.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_2
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: '4-PAM Range: [-1,1]'
+    stream_id: soft_symbols
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1416.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_1
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: tagged_bitstream
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 1624.0]
+    rotation: 0
+    state: true
+
+connections:
+- [analog_pwr_squelch_xx_0, '0', blocks_tag_gate_0, '0']
+- [analog_pwr_squelch_xx_0, '0', pad_sink_1_0_0, '0']
+- [analog_quadrature_demod_cf_0, '0', dc_blocker_xx_0_0, '0']
+- [analog_quadrature_demod_cf_0, '0', mmse_resampler_xx_0_0, '0']
+- [analog_quadrature_demod_cf_0, '0', pad_sink_1_0_0_0, '0']
+- [blocks_add_const_vxx_0_0, '0', blocks_multiply_const_xx_0_0, '0']
+- [blocks_add_const_vxx_1_0, '0', digital_correlate_access_code_tag_xx_0, '0']
+- [blocks_char_to_float_0_0, '0', blocks_multiply_const_xx_1_1, '0']
+- [blocks_char_to_float_0_0, '0', pad_sink_1_0_0_0_0_0_0_0_0_0_0_1_0_0, '0']
+- [blocks_char_to_float_0_0_0, '0', pad_sink_1_0_0_0_0_0_0_0_0_0_0_1_0, '0']
+- [blocks_complex_to_mag_squared_0, '0', blocks_moving_average_xx_0, '0']
+- [blocks_delay_0, '0', virtual_sink_0_0, '0']
+- [blocks_delay_0_0, '0', virtual_sink_0_2, '0']
+- [blocks_float_to_complex_1, '0', digital_constellation_decoder_cb_0, '0']
+- [blocks_moving_average_xx_0, '0', blocks_nlog10_ff_0, '0']
+- [blocks_moving_average_xx_0_0, '0', blocks_multiply_const_xx_0_0_0_0, '0']
+- [blocks_multiply_const_xx_0_0, '0', pad_sink_1_0_0_0_0_0_0_0_0_0_0_0_0, '0']
+- [blocks_multiply_const_xx_0_0_0, '0', pad_sink_1_0_0_0_0_0_0_0_0_0_0_0_0_0, '0']
+- [blocks_multiply_const_xx_0_0_0_0, '0', blocks_delay_0_0, '0']
+- [blocks_multiply_const_xx_1_1, '0', blocks_add_const_vxx_1_0, '0']
+- [blocks_nlog10_ff_0, '0', blocks_delay_0, '0']
+- [blocks_null_source_1, '0', blocks_float_to_complex_1, '1']
+- [blocks_repeat_0, '0', blocks_char_to_float_0_0_0, '0']
+- [blocks_selector_0_0, '0', freq_xlating_fft_filter_ccc_0, '0']
+- [blocks_tag_gate_0, '0', analog_quadrature_demod_cf_0, '0']
+- [blocks_uchar_to_float_0, '0', pad_sink_1_0_0_0_0_0_0_0_0_0_0_0, '0']
+- [blocks_uchar_to_float_0_1_0, '0', pad_sink_1_0_0_0_0_0_0_0_0_0_0_1, '0']
+- [blocks_unpack_k_bits_bb_0, '0', blocks_char_to_float_0_0, '0']
+- [dc_blocker_xx_0_0, '0', pad_sink_1_0_0_0_0, '0']
+- [dc_blocker_xx_0_0, '0', virtual_sink_0, '0']
+- [digital_binary_slicer_fb_0_3, '0', blocks_uchar_to_float_0_1_0, '0']
+- [digital_binary_slicer_fb_0_3, '0', virtual_sink_0_1_0, '0']
+- [digital_constellation_decoder_cb_0, '0', blocks_repeat_0, '0']
+- [digital_constellation_decoder_cb_0, '0', blocks_unpack_k_bits_bb_0, '0']
+- [digital_correlate_access_code_tag_xx_0, '0', digital_binary_slicer_fb_0_3, '0']
+- [digital_correlate_access_code_tag_xx_0, '0', verisure_tag_counter, '0']
+- [digital_symbol_sync_xx_0, '0', pad_sink_1_0_0_0_0_0_0, '0']
+- [digital_symbol_sync_xx_0, '0', virtual_sink_0_0_1, '0']
+- [digital_symbol_sync_xx_0, '1', pad_sink_1_0_0_0_0_0_0_0, '0']
+- [digital_symbol_sync_xx_0, '2', pad_sink_1_0_0_0_0_0_0_0_0, '0']
+- [digital_symbol_sync_xx_0, '3', pad_sink_1_0_0_0_0_0_0_0_0_0, '0']
+- [digital_symbol_sync_xx_0, '3', verisure_float_to_msg_resamp_ratio_converter, '0']
+- [freq_xlating_fft_filter_ccc_0, '0', analog_pwr_squelch_xx_0, '0']
+- [freq_xlating_fft_filter_ccc_0, '0', mmse_resampler_xx_0, '0']
+- [freq_xlating_fft_filter_ccc_0, '0', pad_sink_1, '0']
+- [mmse_resampler_xx_0, '0', blocks_complex_to_mag_squared_0, '0']
+- [mmse_resampler_xx_0_0, '0', blocks_moving_average_xx_0_0, '0']
+- [pad_source_0, '0', blocks_selector_0_0, '0']
+- [verisure_crc_checker, pdu_out, pad_sink_0, in]
+- [verisure_float_to_msg_resamp_ratio_converter, msg_out, virtual_sink_0_0_0, '0']
+- [verisure_tagged_bitstream_to_pdu, pdu_out, verisure_crc_checker, pdu_in]
+- [virtual_source_0, '0', digital_symbol_sync_xx_0, '0']
+- [virtual_source_0, '0', pad_sink_1_0_0_0_0_0, '0']
+- [virtual_source_0_0, '0', blocks_add_const_vxx_0_0, '0']
+- [virtual_source_0_0, '0', verisure_tagged_bitstream_to_pdu, '1']
+- [virtual_source_0_0_0, '0', blocks_multiply_const_xx_0_0_0, '0']
+- [virtual_source_0_0_0, '0', verisure_tagged_bitstream_to_pdu, '2']
+- [virtual_source_0_1, '0', mmse_resampler_xx_0, msg_in]
+- [virtual_source_0_1_0, '0', mmse_resampler_xx_0_0, msg_in]
+- [virtual_source_0_2, '0', blocks_float_to_complex_1, '0']
+- [virtual_source_1, '0', blocks_uchar_to_float_0, '0']
+- [virtual_source_1, '0', verisure_tagged_bitstream_to_pdu, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.2.0
